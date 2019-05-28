@@ -1,6 +1,6 @@
 using Base: show
-using FileIO: save, @format_str, Stream
 using Base64: Base64EncodePipe
+using FileIO: save, @format_str, Stream
 
 """
 Stores raw image data

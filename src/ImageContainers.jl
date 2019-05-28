@@ -1,8 +1,8 @@
 module ImageContainers
 
+export
+    ImageContainer
 
-
-export ImageContainer
 
 include("show.jl")
 
