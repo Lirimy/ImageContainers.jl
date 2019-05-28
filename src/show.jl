@@ -3,13 +3,13 @@ using Base64: Base64EncodePipe
 using FileIO: save, @format_str, Stream
 
 """
-Stores raw image data
+    ImageContainer{format}
 
-format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4]
+Stores raw image data\n
+format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4]\n
+:jlc represents Matrix{T} where T <: Color\n
 
-:jlc represents Matrix{T} where T <: Color
-
-```
+```julia
 c = open("test.png") do io
     ImageContainer{:png}(read(io))
 end
