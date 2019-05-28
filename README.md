@@ -27,7 +27,7 @@ c = ImageContainers{fmt}(imagedata)
 c.content # == imagedata
 ```
 
-## Image Formats
+## Supported Image Formats
 
 
 - jlc = Matrix{<:Color}
