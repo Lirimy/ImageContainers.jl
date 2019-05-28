@@ -4,7 +4,16 @@ using FileIO: save, @format_str, Stream
 
 """
 Stores raw image data
+
 format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4]
+
+:jlc represents Matrix{T} where T <: Color
+
+```
+c = open("test.png") do io
+    ImageContainer{:png}(read(io))
+end
+```
 """
 struct ImageContainer{format}
     content
@@ -22,6 +31,7 @@ const mimetexts = Dict(
 # function Base.show(io::IO, ::MIME"image/png", c::ImageContainer{:png})
 #     write(io, c.content)
 # end
+
 for (fmt, mime) in mimetexts
     @eval function Base.show(io::IO, ::@MIME_str($mime), c::ImageContainer{$[fmt]...})
         write(io, c.content)
