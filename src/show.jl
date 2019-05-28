@@ -1,6 +1,6 @@
 """
 Stores raw image data
-format = [:png, :svg, :jpg, :jpeg, :jlc, :gif, :mp4]
+format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4]
 """
 struct ImageContainer{format}
     content
