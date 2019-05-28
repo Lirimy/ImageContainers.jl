@@ -14,6 +14,18 @@ More examples in [Jupyter Notebook](example/example.ipynb)
 ]add https://github.com/Lirimy/ImageContainers.jl
 ```
 
+## Usage
+
+```julia
+using ImageContainers
+
+imagedata = ... # open file, etc
+fmt = :png
+c = ImageContainers{fmt}(imagedata)
+
+# access to content
+c.content # == imagedata
+```
 
 ## Image Formats
 
