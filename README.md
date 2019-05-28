@@ -1,6 +1,6 @@
 # ImageContainers
 
-Store image, show in Jupyter
+Store image to show in Jupyter
 
 
 
