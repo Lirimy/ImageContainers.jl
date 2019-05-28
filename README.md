@@ -3,11 +3,9 @@
 Store image to show in Jupyter
 
 
-
 ![example](example/example.png)
 
 More examples in [Jupyter Notebook](example/example.ipynb)
-
 
 
 ## Installation
@@ -17,11 +15,7 @@ More examples in [Jupyter Notebook](example/example.ipynb)
 ```
 
 
-
-
-
 ## Image Formats
-
 
 
 - jlc = Matrix{<:Color}
