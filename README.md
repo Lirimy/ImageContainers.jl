@@ -19,7 +19,7 @@ More examples in [Jupyter Notebook](example/example.ipynb)
 ```julia
 using ImageContainers
 
-imagedata = ... # open file, etc
+imagedata = ... # from file, etc.
 fmt = :png
 c = ImageContainers{fmt}(imagedata)
 
