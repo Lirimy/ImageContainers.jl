@@ -1,3 +1,6 @@
 # ImageContainers
 
-![](example.sample.png)
+![example](example/example.png)
+
+More examples in [Jupyter Notebook](example/example.ipynb)
+
