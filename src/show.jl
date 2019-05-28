@@ -1,6 +1,6 @@
-import Base: show
-import FileIO: save, @format_str, Stream
-import Base64: Base64EncodePipe
+using Base: show
+using FileIO: save, @format_str, Stream
+using Base64: Base64EncodePipe
 
 """
 Stores raw image data
