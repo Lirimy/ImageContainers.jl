@@ -33,7 +33,7 @@ const mimetexts = Dict(
 # end
 
 for (fmt, mime) in mimetexts
-    @eval function Base.show(io::IO, ::@MIME_str($mime), c::ImageContainer{$[fmt]...})
+    @eval function Base.show(io::IO, ::@MIME_str($mime), c::ImageContainer{$(QuoteNode(fmt))})
         write(io, c.content)
     end
 end
