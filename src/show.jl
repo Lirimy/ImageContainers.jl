@@ -67,7 +67,7 @@ end
 for fmt in (:gif, :bmp)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
-        write(io, "<img src=\"data:image/$(fmt);base64,")
+        write(io, "<img src=\"data:image/", $(QuoteNode(fmt)), ";base64,")
         ioenc = Base64EncodePipe(io)
         write(ioenc, c.content)
         close(ioenc)
@@ -79,7 +79,7 @@ end
 for fmt in (:mp4, :webm)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
-        write(io, "<video controls autoplay loop src=\"data:video/$(fmt);base64,")
+        write(io, "<video controls autoplay loop src=\"data:video/", $(QuoteNode(fmt)), ";base64,")
         ioenc = Base64EncodePipe(io)
         write(ioenc, c.content)
         close(ioenc)
