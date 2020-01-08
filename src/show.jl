@@ -5,19 +5,26 @@ using FileIO: save, @format_str, Stream
 """
     ImageContainer{format}
 
-Stores raw image data\n
-format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]\n
-:jlc represents Matrix{T} where T <: Color\n
+Stores raw image data as `format`.\n
 
-```julia
-c = open("test.png") do io
-    ImageContainer{:png}(read(io))
+supported format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]\n
+:jlc represents `Matrix{T} where T <: Color`\n
+"""
+struct ImageContainer{format, S}
+    content::S
 end
+
+"""
+    storeimage(format::Symbol, data)
+
+Stores `data` as `format`.
+
+# Examples
+```julia
+c = storeimage(:png, read("image.png"))
 ```
 """
-struct ImageContainer{format}
-    content
-end
+storeimage(format::Symbol, data) = ImageContainer{format, typeof(data)}(data)
 
 # Formats Jupyter accepts without convert/processing
 const mimetexts = Dict(
