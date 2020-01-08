@@ -1,4 +1,4 @@
-using Base: show
+#using Base: show
 using Base64: Base64EncodePipe
 using FileIO: save, @format_str, Stream
 
@@ -14,17 +14,38 @@ struct ImageContainer{format, S}
     content::S
 end
 
+function fileextension(file::AbstractString)
+    _, ex = Base.Filesystem.splitext(file)
+    if length(ex) <= 1
+        ""
+    else
+        ex[2:end]
+    end
+end
+
 """
     storeimage(format::Symbol, data)
+    storeimage(file::AbstractString)
 
 Stores `data` as `format`.
+Returns `ImageContainer{format, typeof(data)}`.
 
 # Examples
 ```julia
-c = storeimage(:png, read("image.png"))
+c = storeimage("image.png")
+#c = storeimage(:png, read("image.png"))
 ```
 """
 storeimage(format::Symbol, data) = ImageContainer{format, typeof(data)}(data)
+
+function storeimage(file::AbstractString)
+    ex = fileextension(file)
+    if ex == ""
+        error("Format identification failed: $file")
+    else
+        storeimage(Symbol(ex), read(file))
+    end
+end
 
 # Formats Jupyter accepts without convert/processing
 const mimetexts = Dict(
