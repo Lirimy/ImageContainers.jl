@@ -3,12 +3,12 @@ using Base64: Base64EncodePipe
 using FileIO: save, @format_str, Stream
 
 """
-    ImageContainer{format}
+    ImageContainer{format, S}
 
-Stores raw image data as `format`.\n
+Stores raw image data as `format`.
 
-supported format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]\n
-:jlc represents `Matrix{T} where T <: Color`\n
+supported format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]
+`:jlc` represents `Matrix{T<:Color}`.
 """
 struct ImageContainer{format, S}
     content::S
@@ -32,8 +32,8 @@ Returns `ImageContainer{format, typeof(data)}`.
 
 # Examples
 ```julia
-c = storeimage("image.png")
-#c = storeimage(:png, read("image.png"))
+c1 = storeimage(:png, read("image.png"))
+c2 = storeimage("image.png")
 ```
 """
 storeimage(format::Symbol, data) = ImageContainer{format, typeof(data)}(data)
