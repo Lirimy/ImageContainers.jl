@@ -47,7 +47,7 @@ function storeimage(file::AbstractString)
     end
 end
 
-# Formats Jupyter accepts without convert/processing
+# Formats IJulia.jl can show without processing
 const mimetexts = Dict(
     :png    => "image/png",
     :svg    => "image/svg+xml",
@@ -55,69 +55,44 @@ const mimetexts = Dict(
     :jpeg   => "image/jpeg"
 )
 
-
-# function Base.show(io::IO, ::MIME"image/png", c::ImageContainer{:png})
-#     write(io, c.content)
-# end
-
+# Without converting
 for (fmt, mime) in mimetexts
-    @eval function Base.show(io::IO, ::@MIME_str($mime), c::ImageContainer{$(QuoteNode(fmt))})
+    @eval function Base.show(io::IO, ::@MIME_str($mime),
+                             c::ImageContainer{$(QuoteNode(fmt))})
         write(io, c.content)
     end
 end
 
-# Julia Image
-# Matrix{<:Color}
+# With Base64 encoding
+for fmt in (:gif, :bmp)
+    @eval function Base.show(io::IO, ::MIME"text/html",
+                             c::ImageContainer{$(QuoteNode(fmt))})
+        write(io, "<img src=\"data:image/$(fmt);base64,")
+        ioenc = Base64EncodePipe(io)
+        write(ioenc, c.content)
+        close(ioenc)
+        write(io, "\" />")
+    end
+end
+
+# Videos
+for fmt in (:mp4, :webm)
+    @eval function Base.show(io::IO, ::MIME"text/html",
+                             c::ImageContainer{$(QuoteNode(fmt))})
+        write(io, "<video controls autoplay loop src=\"data:video/$(fmt);base64,")
+        ioenc = Base64EncodePipe(io)
+        write(ioenc, c.content)
+        close(ioenc)
+        write(io, "\" />")
+    end
+end
+
+# Julia image = Matrix{<:Color}
+# Needs converting to Bitmap
 function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:jlc})
     write(io, "<img src=\"data:image/bmp;base64,")
-
     ioenc = Base64EncodePipe(io)
     save(Stream(format"BMP", ioenc), c.content)
     close(ioenc)
-
-    write(io, "\" />")
-end
-
-function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:gif})
-
-    write(io, "<img src=\"data:image/gif;base64,")
-
-    ioenc = Base64EncodePipe(io)
-    write(ioenc, c.content)
-    close(ioenc)
-
-    write(io, "\" />")
-end
-
-function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:bmp})
-
-    write(io, "<img src=\"data:image/bmp;base64,")
-
-    ioenc = Base64EncodePipe(io)
-    write(ioenc, c.content)
-    close(ioenc)
-
-    write(io, "\" />")
-end
-
-function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:mp4})
-
-    write(io, "<video controls autoplay loop src=\"data:video/mp4;base64,")
-
-    ioenc = Base64EncodePipe(io)
-    write(ioenc, c.content)
-    close(ioenc)
-
-    write(io, "\" />")
-end
-
-function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:webm})
-
-    write(io, "<video controls autoplay loop src=\"data:video/webm;base64,")
-
-    ioenc = Base64EncodePipe(io)
-    write(ioenc, c.content)
-    close(ioenc)
-
     write(io, "\" />")
 end
