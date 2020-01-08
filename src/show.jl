@@ -6,7 +6,7 @@ using FileIO: save, @format_str, Stream
     ImageContainer{format}
 
 Stores raw image data\n
-format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4]\n
+format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]\n
 :jlc represents Matrix{T} where T <: Color\n
 
 ```julia
@@ -42,44 +42,54 @@ end
 # Matrix{<:Color}
 function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:jlc})
     write(io, "<img src=\"data:image/bmp;base64,")
-    
+
     ioenc = Base64EncodePipe(io)
-    save(Stream(format"BMP", ioenc), c.content) 
+    save(Stream(format"BMP", ioenc), c.content)
     close(ioenc)
-    
+
     write(io, "\" />")
 end
 
 function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:gif})
-    
+
     write(io, "<img src=\"data:image/gif;base64,")
-    
+
     ioenc = Base64EncodePipe(io)
     write(ioenc, c.content)
     close(ioenc)
-    
+
     write(io, "\" />")
 end
 
 function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:bmp})
-    
+
     write(io, "<img src=\"data:image/bmp;base64,")
-    
+
     ioenc = Base64EncodePipe(io)
     write(ioenc, c.content)
     close(ioenc)
-    
+
     write(io, "\" />")
 end
 
 function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:mp4})
-    
+
     write(io, "<video controls autoplay loop src=\"data:video/mp4;base64,")
-    
+
     ioenc = Base64EncodePipe(io)
     write(ioenc, c.content)
     close(ioenc)
-    
+
     write(io, "\" />")
 end
 
+function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:webm})
+
+    write(io, "<video controls autoplay loop src=\"data:video/webm;base64,")
+
+    ioenc = Base64EncodePipe(io)
+    write(ioenc, c.content)
+    close(ioenc)
+
+    write(io, "\" />")
+end
