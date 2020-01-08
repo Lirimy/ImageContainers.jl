@@ -1,4 +1,3 @@
-#using Base: show
 using Base64: Base64EncodePipe
 using FileIO: save, @format_str, Stream
 
@@ -79,7 +78,8 @@ end
 for fmt in (:mp4, :webm)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
-        write(io, "<video controls autoplay loop src=\"data:video/", $(QuoteNode(fmt)), ";base64,")
+        write(io, "<video controls autoplay loop src=\"data:video/",
+                  $(QuoteNode(fmt)), ";base64,")
         ioenc = Base64EncodePipe(io)
         write(ioenc, c.content)
         close(ioenc)
