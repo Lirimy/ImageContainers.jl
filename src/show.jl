@@ -47,7 +47,7 @@ function storeimage(file::AbstractString)
 end
 
 # Formats IJulia.jl can show without processing
-const mimetexts = Dict(
+const _mimemap = Dict(
     :png    => "image/png",
     :svg    => "image/svg+xml",
     :jpg    => "image/jpeg",
@@ -55,7 +55,7 @@ const mimetexts = Dict(
 )
 
 # Without converting
-for (fmt, mime) in mimetexts
+for (fmt, mime) in _mimemap
     @eval function Base.show(io::IO, ::@MIME_str($mime),
                              c::ImageContainer{$(QuoteNode(fmt))})
         write(io, c.content)
