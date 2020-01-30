@@ -18,15 +18,10 @@ More examples are in [Jupyter Notebook](example/example.ipynb)
 ```julia
 using ImageContainers
 
-imagedata = read("sample.png")
-fmt = :png
-c = storeimage(fmt, imagedata)
+c = storeimage(:png, "sample.png")
 
-# shortened form (automatic format inference by the file extension)
+# shortened form
 c = storeimage("sample.png")
-
-# access to content
-c.content # == imagedata
 ```
 
 ## Supported Image Formats
