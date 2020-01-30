@@ -2,7 +2,9 @@
 
 Store an image to show in Jupyter / Juno.
 
-Examples are in [Jupyter Notebook](example/example.ipynb)
+![sample](https://user-images.githubusercontent.com/31124605/73450248-5d790380-43a8-11ea-8f6a-d321accd809e.png)
+
+More examples are in [Jupyter Notebook](example/example.ipynb)
 
 
 ## Installation
@@ -20,7 +22,7 @@ imagedata = read("sample.png")
 fmt = :png
 c = storeimage(fmt, imagedata)
 
-# short version (automatic inference by file extension)
+# shortened form (automatic format inference by the file extension)
 c = storeimage("sample.png")
 
 # access to content
