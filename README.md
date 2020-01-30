@@ -2,10 +2,7 @@
 
 Store an image to show in Jupyter / Juno.
 
-
-![example](example/example.png)
-
-More examples in [Jupyter Notebook](example/example.ipynb)
+Examples are in [Jupyter Notebook](example/example.ipynb)
 
 
 ## Installation
