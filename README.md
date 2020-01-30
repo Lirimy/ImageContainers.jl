@@ -1,6 +1,6 @@
 # ImageContainers
 
-Store image to show in Jupyter
+Store an image to show in Jupyter / Juno.
 
 
 ![example](example/example.png)
@@ -19,9 +19,12 @@ More examples in [Jupyter Notebook](example/example.ipynb)
 ```julia
 using ImageContainers
 
-imagedata = ... # from file, etc.
+imagedata = read("sample.png")
 fmt = :png
-c = ImageContainers{fmt}(imagedata)
+c = storeimage(fmt, imagedata)
+
+# short version (automatic inference by file extension)
+c = storeimage("sample.png")
 
 # access to content
 c.content # == imagedata
@@ -37,4 +40,5 @@ c.content # == imagedata
 - bmp
 - gif
 - mp4
+- webm
 
