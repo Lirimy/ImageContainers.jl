@@ -18,7 +18,7 @@ More examples are in [Jupyter Notebook](example/example.ipynb)
 ```julia
 using ImageContainers
 
-c = storeimage(:png, "sample.png")
+c = storeimage(:png, read("sample.png"))
 
 # shortened form
 c = storeimage("sample.png")
