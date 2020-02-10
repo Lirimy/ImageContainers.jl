@@ -1,11 +1,10 @@
 # ImageContainers
 
-Store image to show in Jupyter
+Store an image to show in Jupyter / Juno.
 
+![sample](https://user-images.githubusercontent.com/31124605/73450248-5d790380-43a8-11ea-8f6a-d321accd809e.png)
 
-![example](example/example.png)
-
-More examples in [Jupyter Notebook](example/example.ipynb)
+More examples are in [Jupyter Notebook](example/example.ipynb)
 
 
 ## Installation
@@ -19,12 +18,11 @@ More examples in [Jupyter Notebook](example/example.ipynb)
 ```julia
 using ImageContainers
 
-imagedata = ... # from file, etc.
-fmt = :png
-c = ImageContainers{fmt}(imagedata)
+img = read("sample.png")
+c = storeimage(:png, img)
 
-# access to content
-c.content # == imagedata
+# shortened form
+c = storeimage("sample.png")
 ```
 
 ## Supported Image Formats
@@ -37,4 +35,5 @@ c.content # == imagedata
 - bmp
 - gif
 - mp4
+- webm
 

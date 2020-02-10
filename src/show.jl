@@ -46,16 +46,17 @@ function storeimage(file::AbstractString)
     end
 end
 
-# Formats IJulia.jl can show without processing
-const _mimemap = Dict(
+const plainmimes = Dict(
     :png    => "image/png",
     :svg    => "image/svg+xml",
     :jpg    => "image/jpeg",
-    :jpeg   => "image/jpeg"
+    :jpeg   => "image/jpeg",
+    :bmp    => "image/bmp",     # for Juno
+    :gif    => "image/gif"      # for Juno
 )
 
 # Without converting
-for (fmt, mime) in _mimemap
+for (fmt, mime) in plainmimes
     @eval function Base.show(io::IO, ::@MIME_str($mime),
                              c::ImageContainer{$(QuoteNode(fmt))})
         write(io, c.content)
@@ -95,4 +96,18 @@ function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:jlc})
     save(Stream(format"BMP", ioenc), c.content)
     close(ioenc)
     write(io, "\" />")
+end
+
+# Juno videos
+for fmt in (:mp4, :webm)
+    @eval function Base.show(io::IO,
+                            ::MIME"application/prs.juno.plotpane+html",
+                            c::ImageContainer{$(QuoteNode(fmt))})
+        show(io, MIME("text/html"), c)
+    end
+end
+
+# Juno Julia image
+function Base.show(io::IO, ::MIME"image/bmp", c::ImageContainer{:jlc})
+    save(Stream(format"BMP", io), c.content)
 end
