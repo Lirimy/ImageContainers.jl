@@ -1,7 +1,12 @@
 name = "ImageContainers"
-uuid = "e15576c3-da43-4c5c-acae-80a8739df47e"
+uuid = "d7fcca20-80f2-11e9-0c11-e932b7d58cd9"
 authors = ["Lirimy <31124605+Lirimy@users.noreply.github.com>"]
 version = "0.1.0"
+
+[deps]
+Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
+FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+ImageMagick = "6218d12a-5da1-5696-b52f-db25d2ecc6d1"
 
 [compat]
 julia = "1"

@@ -7,3 +7,40 @@
 [![Codecov](https://codecov.io/gh/Lirimy/ImageContainers.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/Lirimy/ImageContainers.jl)
 [![Coveralls](https://coveralls.io/repos/github/Lirimy/ImageContainers.jl/badge.svg?branch=master)](https://coveralls.io/github/Lirimy/ImageContainers.jl?branch=master)
 [![Build Status](https://api.cirrus-ci.com/github/Lirimy/ImageContainers.jl.svg)](https://cirrus-ci.com/github/Lirimy/ImageContainers.jl)
+
+Store an image to show in Jupyter / Juno.
+
+![sample](https://user-images.githubusercontent.com/31124605/73450248-5d790380-43a8-11ea-8f6a-d321accd809e.png)
+
+More examples are in [Jupyter Notebook](example/example.ipynb)
+
+## Installation
+
+```julia
+]add https://github.com/Lirimy/ImageContainers.jl
+```
+
+## Usage
+
+```julia
+using ImageContainers
+
+img = read("sample.png")
+c = storeimage(:png, img)
+
+# shortened form
+c = storeimage("sample.png")
+```
+
+## Supported Image Formats
+
+
+- jlc = Matrix{<:Color}
+- png
+- svg
+- jpg/jpeg
+- bmp
+- gif
+- mp4
+- webm
+

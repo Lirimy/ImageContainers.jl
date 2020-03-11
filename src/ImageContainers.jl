@@ -1,5 +1,10 @@
 module ImageContainers
 
-greet() = print("Hello World!")
+export
+    ImageContainer,
+    storeimage
+
+
+include("show.jl")
 
 end # module
