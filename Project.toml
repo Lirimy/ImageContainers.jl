@@ -11,6 +11,7 @@ QuartzImageIO = "dca85d43-d64c-5e67-8c65-017450d5d020"
 
 [compat]
 FileIO = "1.2"
+ImageMagick = "0.7, 1.1"
 QuartzImageIO = "0.7"
 julia = "1"
 
