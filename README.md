@@ -17,7 +17,7 @@ More examples are in [Jupyter Notebook](example/example.ipynb)
 ## Installation
 
 ```julia
-]add https://github.com/Lirimy/ImageContainers.jl
+]add ImageContainers
 ```
 
 ## Usage
