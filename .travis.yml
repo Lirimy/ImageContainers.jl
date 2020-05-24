@@ -3,8 +3,10 @@ language: julia
 os:
   - linux
   - osx
+  - freebsd
 julia:
   - 1.0
+  - 1.4
   - nightly
 notifications:
   email: false
