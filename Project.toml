@@ -1,7 +1,7 @@
 name = "ImageContainers"
 uuid = "d7fcca20-80f2-11e9-0c11-e932b7d58cd9"
 authors = ["Lirimy <31124605+Lirimy@users.noreply.github.com>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Base64 = "2a0f44e3-6c83-55bd-87e4-b1978d98bd5f"
@@ -13,7 +13,7 @@ QuartzImageIO = "dca85d43-d64c-5e67-8c65-017450d5d020"
 FileIO = "1.2"
 ImageMagick = "0.7, 1.1"
 QuartzImageIO = "0.7"
-julia = "1.0, 1.4"
+julia = "1.0, 1.5"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
