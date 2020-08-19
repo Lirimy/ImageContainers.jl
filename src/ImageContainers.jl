@@ -2,7 +2,7 @@ module ImageContainers
 
 export
     ImageContainer,
-    storeimage
+    loadimage
 
 
 include("show.jl")
