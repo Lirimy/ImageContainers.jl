@@ -6,7 +6,7 @@ using FileIO
 
 Stores raw image data as `format`.
 
-supported format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]
+supported format = [:png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]
 `:jlc` represents `Matrix{T<:Color}`.
 """
 struct ImageContainer{fmt, T}
@@ -15,6 +15,7 @@ struct ImageContainer{fmt, T}
 end
 
 #function loadimage(filename::AbstractString)
+#    load
 
 
 const plainmimes = Dict(
@@ -57,16 +58,6 @@ for fmt in (:mp4, :webm)
         close(ioenc)
         write(io, "\" />")
     end
-end
-
-# Julia image = Matrix{<:Color}
-# Needs converting to Bitmap
-function Base.show(io::IO, ::MIME"text/html", c::ImageContainer{:jlc})
-    write(io, "<img src=\"data:image/bmp;base64,")
-    ioenc = Base64EncodePipe(io)
-    save(Stream(format"BMP", ioenc), c.content)
-    close(ioenc)
-    write(io, "\" />")
 end
 
 # Juno videos
