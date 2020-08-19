@@ -2,11 +2,11 @@ using Base64
 using FileIO
 
 """
-    ImageContainer{format, S}
+ImageContainer{fmt}(data)
 
-Stores raw image data as `format`.
+Stores raw image `data` as format `fmt`.
 
-supported format = [:png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]
+supported format = [:PNG, :SVG, :JPEG, :BMP, :GIF, :MP4, :WEBM]
 """
 struct ImageContainer{fmt, T}
     content::T
