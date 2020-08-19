@@ -1,5 +1,5 @@
-using Base64: Base64EncodePipe
-using FileIO: save, @format_str, Stream
+using Base64
+using FileIO
 
 """
     ImageContainer{format, S}
@@ -9,42 +9,13 @@ Stores raw image data as `format`.
 supported format = [:jlc, :png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]
 `:jlc` represents `Matrix{T<:Color}`.
 """
-struct ImageContainer{format, S}
-    content::S
+struct ImageContainer{fmt, T}
+    content::T
+    ImageContainer{fmt}(data) where fmt = new{fmt, typeof(data)}(data)
 end
 
-function fileextension(file::AbstractString)
-    _, ex = Base.Filesystem.splitext(file)
-    if length(ex) <= 1
-        ""
-    else
-        ex[2:end]
-    end
-end
+#function loadimage(filename::AbstractString)
 
-"""
-    storeimage(format::Symbol, data)
-    storeimage(file::AbstractString)
-
-Stores `data` as `format`.
-Returns `ImageContainer{format, typeof(data)}`.
-
-# Examples
-```julia
-c1 = storeimage(:png, read("image.png"))
-c2 = storeimage("image.png")
-```
-"""
-storeimage(format::Symbol, data) = ImageContainer{format, typeof(data)}(data)
-
-function storeimage(file::AbstractString)
-    ex = fileextension(file)
-    if ex == ""
-        error("Format identification failed: $file")
-    else
-        storeimage(Symbol(ex), read(file))
-    end
-end
 
 const plainmimes = Dict(
     :png    => "image/png",
@@ -105,9 +76,4 @@ for fmt in (:mp4, :webm)
                             c::ImageContainer{$(QuoteNode(fmt))})
         show(io, MIME("text/html"), c)
     end
-end
-
-# Juno Julia image
-function Base.show(io::IO, ::MIME"image/bmp", c::ImageContainer{:jlc})
-    save(Stream(format"BMP", io), c.content)
 end
