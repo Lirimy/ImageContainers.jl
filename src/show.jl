@@ -13,9 +13,10 @@ struct ImageContainer{fmt, T}
     ImageContainer{fmt}(data) where fmt = new{fmt, typeof(data)}(data)
 end
 
-#function loadimage(filename::AbstractString)
-#    load
+getformat(f::File{DataFormat{T}}) where T = T
+getformat(filename::AbstractString) = query(filename) |> getformat
 
+loadimage(filename::AbstractString; fmt=getformat(filename)) = ImageContainer{fmt}(read(filename))
 
 const plainmimes = Dict(
     :PNG    => "image/png",
