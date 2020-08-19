@@ -7,7 +7,6 @@ using FileIO
 Stores raw image data as `format`.
 
 supported format = [:png, :svg, :jpg, :jpeg, :bmp, :gif, :mp4, :webm]
-`:jlc` represents `Matrix{T<:Color}`.
 """
 struct ImageContainer{fmt, T}
     content::T
@@ -19,12 +18,11 @@ end
 
 
 const plainmimes = Dict(
-    :png    => "image/png",
-    :svg    => "image/svg+xml",
-    :jpg    => "image/jpeg",
-    :jpeg   => "image/jpeg",
-    :bmp    => "image/bmp",     # for Juno
-    :gif    => "image/gif"      # for Juno
+    :PNG    => "image/png",
+    :SVG    => "image/svg+xml",
+    :JPEG   => "image/jpeg",
+    :BMP    => "image/bmp",     # for Juno
+    :GIF    => "image/gif"      # for Juno
 )
 
 # Without converting
@@ -36,7 +34,7 @@ for (fmt, mime) in plainmimes
 end
 
 # With Base64 encoding
-for fmt in (:gif, :bmp)
+for fmt in (:GIF, :BMP)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
         write(io, "<img src=\"data:image/", $(QuoteNode(fmt)), ";base64,")
@@ -48,7 +46,7 @@ for fmt in (:gif, :bmp)
 end
 
 # Videos
-for fmt in (:mp4, :webm)
+for fmt in (:MP4, :WEBM)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
         write(io, "<video controls autoplay loop src=\"data:video/",
@@ -61,7 +59,7 @@ for fmt in (:mp4, :webm)
 end
 
 # Juno videos
-for fmt in (:mp4, :webm)
+for fmt in (:MP4, :WEBM)
     @eval function Base.show(io::IO,
                             ::MIME"application/prs.juno.plotpane+html",
                             c::ImageContainer{$(QuoteNode(fmt))})

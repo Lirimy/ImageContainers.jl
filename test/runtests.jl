@@ -18,13 +18,13 @@ end
         @test c.content == data
         @test writebuf(c, mime) == data
     end
-    for fmt in (:gif, :bmp)
+    for fmt in (:GIF, :BMP)
         c = ImageContainer{fmt}(data)
         @test c.content == data
         @test String(writebuf(c, "text/html")) ==
             "<img src=\"data:image/$fmt;base64,$b64data\" />"
     end
-    for fmt in (:mp4, :webm)
+    for fmt in (:MP4, :WEBM)
         for mime in ("text/html", "application/prs.juno.plotpane+html")
             c = ImageContainer{fmt}(data)
             @test c.content == data
