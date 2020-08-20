@@ -34,3 +34,15 @@ end
         end
     end
 end
+
+@testset "Image show testing" begin
+    d = Base.Multimedia.displays[end]
+    println(d)
+    for file in readdir("..\\resources\\testimage\\"; join=true)
+        println(file)
+        c = loadimage(file)
+        @test Base.Multimedia.xdisplayable(d, c)
+        #@test loadimage(file) |> displayable
+        #display(d, c)
+    end
+end
