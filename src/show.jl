@@ -15,8 +15,7 @@ end
 
 getformat(filename::AbstractString) = query(filename) |> getformat
 getformat(f::File{DataFormat{:UNKNOWN}}) = file_extension(f)[2:end] |> Symbol
-getformat(f::File{DataFormat{T}}) where T = lowercase(string(T)) |> Symbol
-
+getformat(f::File{DataFormat{T}}) where {T<:Symbol} = lowercase(string(T)) |> Symbol
 
 loadimage(filename::AbstractString; fmt=getformat(filename)) = ImageContainer{fmt}(read(filename))
 
