@@ -69,12 +69,15 @@ for fmt in (:gif, :bmp, :mp4, :webm), mime in (MIME"application/prs.juno.plotpan
     end
 end
 
-function testimages()
+const testimages = begin
+    testimagedir = joinpath(pkgdir(ImageContainers), "resources\\testimage\\")
+    readdir(testimagedir; join=true)
+end
+
+function showtestimages()
     d = Base.Multimedia.displays[end]
     println(d)
-    testimagedir = joinpath(pkgdir(ImageContainers), "resources\\testimage\\")
-    print(readdir(testimagedir))
-    for file in readdir(testimagedir; join=true)
+    for file in testimages
         c = loadimage(file)
         display(c)
     end
