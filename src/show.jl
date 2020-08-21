@@ -72,12 +72,10 @@ end
 function testimages()
     d = Base.Multimedia.displays[end]
     println(d)
-    for file in readdir(joinpath(pkgdir(ImageContainers), "resources\\testimage\\"); join=true)
-        println(file)
+    testimagedir = joinpath(pkgdir(ImageContainers), "resources\\testimage\\")
+    print(readdir(testimagedir))
+    for file in readdir(testimagedir; join=true)
         c = loadimage(file)
-        #@test Base.Multimedia.xdisplayable(d, c)
-        #@test loadimage(file) |> displayable
-        #display(d, c)
         display(c)
     end
 end
