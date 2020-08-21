@@ -74,11 +74,12 @@ const testimages = begin
     readdir(testimagedir; join=true)
 end
 
-function showtestimages()
+function showtestimages(ix=eachindex(testimages))
     d = Base.Multimedia.displays[end]
     println(d)
-    for file in testimages
-        c = loadimage(file)
+    for i in ix
+        c = loadimage(testimages[i])
+        println(typeof(c))
         display(c)
     end
 end
