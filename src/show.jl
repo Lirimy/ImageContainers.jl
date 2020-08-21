@@ -6,24 +6,26 @@ ImageContainer{fmt}(data)
 
 Stores raw image `data` as format `fmt`.
 
-supported format = [:PNG, :SVG, :JPEG, :BMP, :GIF, :MP4, :WEBM]
+supported format = [:png, :svg, :jpeg, :bmp, :gif, :mp4, :webm]
 """
 struct ImageContainer{fmt, T}
     content::T
     ImageContainer{fmt}(data) where fmt = new{fmt, typeof(data)}(data)
 end
 
-getformat(f::File{DataFormat{T}}) where T = T
 getformat(filename::AbstractString) = query(filename) |> getformat
+getformat(f::File{DataFormat{:UNKNOWN}}) = file_extension(f)[2:end] |> Symbol
+getformat(f::File{DataFormat{T}}) where T = lowercase(string(T)) |> Symbol
+
 
 loadimage(filename::AbstractString; fmt=getformat(filename)) = ImageContainer{fmt}(read(filename))
 
 const plainmimes = Dict(
-    :PNG    => "image/png",
-    :SVG    => "image/svg+xml",
-    :JPEG   => "image/jpeg",
-    :BMP    => "image/bmp",     # for Juno
-    :GIF    => "image/gif"      # for Juno
+    :png    => "image/png",
+    :svg    => "image/svg+xml",
+    :jpeg   => "image/jpeg",
+    :bmp    => "image/bmp",     # for Juno
+    :gif    => "image/gif"      # for Juno
 )
 
 # Without converting
@@ -35,7 +37,7 @@ for (fmt, mime) in plainmimes
 end
 
 # With Base64 encoding
-for fmt in (:GIF, :BMP)
+for fmt in (:gif, :bmp)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
         write(io, "<img src=\"data:image/", $(QuoteNode(fmt)), ";base64,")
@@ -47,7 +49,7 @@ for fmt in (:GIF, :BMP)
 end
 
 # Videos
-for fmt in (:MP4, :WEBM)
+for fmt in (:mp4, :webm)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
         write(io, "<video controls autoplay loop src=\"data:video/",
@@ -60,10 +62,23 @@ for fmt in (:MP4, :WEBM)
 end
 
 # Juno videos
-for fmt in (:MP4, :WEBM)
+for fmt in (:gif, :bmp, :mp4, :webm), mime in (MIME"application/prs.juno.plotpane+html", MIME"vscode/html")
     @eval function Base.show(io::IO,
-                            ::MIME"application/prs.juno.plotpane+html",
+                            ::$(mime),
                             c::ImageContainer{$(QuoteNode(fmt))})
         show(io, MIME("text/html"), c)
+    end
+end
+
+function testimages()
+    d = Base.Multimedia.displays[end]
+    println(d)
+    for file in readdir(joinpath(pkgdir(ImageContainers), "resources\\testimage\\"); join=true)
+        println(file)
+        c = loadimage(file)
+        #@test Base.Multimedia.xdisplayable(d, c)
+        #@test loadimage(file) |> displayable
+        #display(d, c)
+        display(c)
     end
 end

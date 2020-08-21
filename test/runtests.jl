@@ -18,13 +18,13 @@ end
         @test c.content == data
         @test writebuf(c, mime) == data
     end
-    for fmt in (:GIF, :BMP)
+    for fmt in (:gif, :bmp)
         c = ImageContainer{fmt}(data)
         @test c.content == data
         @test String(writebuf(c, "text/html")) ==
             "<img src=\"data:image/$fmt;base64,$b64data\" />"
     end
-    for fmt in (:MP4, :WEBM)
+    for fmt in (:mp4, :webm)
         for mime in ("text/html", "application/prs.juno.plotpane+html")
             c = ImageContainer{fmt}(data)
             @test c.content == data
@@ -35,14 +35,3 @@ end
     end
 end
 
-@testset "Image show testing" begin
-    d = Base.Multimedia.displays[end]
-    println(d)
-    for file in readdir("..\\resources\\testimage\\"; join=true)
-        println(file)
-        c = loadimage(file)
-        @test Base.Multimedia.xdisplayable(d, c)
-        #@test loadimage(file) |> displayable
-        #display(d, c)
-    end
-end
