@@ -36,7 +36,7 @@ for (fmt, mime) in plainmimes
 end
 
 # With Base64 encoding
-for fmt in (:gif, :bmp)
+for fmt in (:jpeg, :gif, :bmp)
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
         write(io, "<img src=\"data:image/", $(QuoteNode(fmt)), ";base64,")
@@ -61,7 +61,7 @@ for fmt in (:mp4, :webm)
 end
 
 # Juno videos
-for fmt in (:gif, :bmp, :mp4, :webm), mime in (MIME"application/prs.juno.plotpane+html", MIME"juliavscode/html")
+for fmt in (:jpeg, :gif, :bmp, :mp4, :webm), mime in (MIME"application/prs.juno.plotpane+html", MIME"juliavscode/html")
     @eval function Base.show(io::IO, ::$(mime), c::ImageContainer{$(QuoteNode(fmt))})
         show(io, MIME("text/html"), c)
     end
