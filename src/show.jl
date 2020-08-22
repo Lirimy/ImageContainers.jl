@@ -61,10 +61,8 @@ for fmt in (:mp4, :webm)
 end
 
 # Juno videos
-for fmt in (:gif, :bmp, :mp4, :webm), mime in (MIME"application/prs.juno.plotpane+html", MIME"vscode/html")
-    @eval function Base.show(io::IO,
-                            ::$(mime),
-                            c::ImageContainer{$(QuoteNode(fmt))})
+for fmt in (:gif, :bmp, :mp4, :webm), mime in (MIME"application/prs.juno.plotpane+html", MIME"juliavscode/html")
+    @eval function Base.show(io::IO, ::$(mime), c::ImageContainer{$(QuoteNode(fmt))})
         show(io, MIME("text/html"), c)
     end
 end
