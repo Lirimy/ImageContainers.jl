@@ -13,7 +13,7 @@ QuartzImageIO = "dca85d43-d64c-5e67-8c65-017450d5d020"
 FileIO = "1.2"
 ImageMagick = "0.7, 1.1"
 QuartzImageIO = "0.7"
-julia = "1.0, 1.5"
+julia = "1.0, 1.5, 1.6"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
