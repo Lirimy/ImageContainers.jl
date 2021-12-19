@@ -47,12 +47,17 @@ for fmt in (:jpeg, :gif, :bmp)
     end
 end
 
+const videomimes = Dict(
+    :mp4        => "video/mp4",
+    :matroska   => "video/webm"
+)
+
 # Videos
-for fmt in (:mp4, :webm)
+for (fmt, mime) in videomimes
     @eval function Base.show(io::IO, ::MIME"text/html",
                              c::ImageContainer{$(QuoteNode(fmt))})
-        write(io, "<video controls autoplay loop src=\"data:video/",
-                  $(QuoteNode(fmt)), ";base64,")
+        write(io, "<video controls autoplay loop src=\"data:",
+                  $mime, ";base64,")
         ioenc = Base64EncodePipe(io)
         write(ioenc, c.content)
         close(ioenc)
