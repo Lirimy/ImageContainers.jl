@@ -6,7 +6,7 @@ ImageContainer{fmt}(data)
 
 Stores raw image `data` as format `fmt`.
 
-supported format = [:png, :svg, :jpeg, :bmp, :gif, :mp4, :webm]
+supported format = [:png, :svg, :jpeg, :bmp, :gif, :mp4, :matroska (.webm)]
 """
 struct ImageContainer{fmt, T}
     content::T
@@ -17,6 +17,12 @@ getformat(filename::AbstractString) = query(filename) |> getformat
 getformat(f::File{DataFormat{:UNKNOWN}}) = file_extension(f)[2:end] |> Symbol
 getformat(f::File{DataFormat{T}}) where T = lowercase(string(T)) |> Symbol
 
+"""
+loadimage(filename::AbstractString; fmt=getformat(filename))
+
+Open an image file to display. Format is automatically detected.
+Supported format = [:png, :svg, :jpeg, :bmp, :gif, :mp4, :matroska (.webm)]
+"""
 loadimage(filename::AbstractString; fmt=getformat(filename)) = ImageContainer{fmt}(read(filename))
 
 const plainmimes = Dict(
